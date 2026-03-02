@@ -1,0 +1,1 @@
+echo "vlc install message"
