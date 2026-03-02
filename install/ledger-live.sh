@@ -1,3 +1,4 @@
+#!/bin/bash
 # Downloads the AppImage and sets the required USB permissions
 wget https://download.live.ledger.com/latest/linux -O ~/ledger-live.AppImage
 chmod +x ~/ledger-live.AppImage

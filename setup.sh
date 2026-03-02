@@ -11,6 +11,10 @@ sudo apt install -y gnome-software-plugin-flatpak
 sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 sudo apt install -y openssh-server git gitk
 sudo systemctl enable --now ssh
+
+sudo apt install curl wget
+sudo apt install -y flatpak
+
 # Loop through every script in the 'install' directory
 for script in install/*.sh; do
   # Extract just the filename without the .sh extension (e.g., 'vlc')
