@@ -6,9 +6,14 @@ echo "Installing Neovim and Python dependencies..."
 sudo apt update
 sudo apt install -y libfuse2t64 make gcc python3-pip python3-venv python3-full luarocks tree-sitter-cli
 
+sudo apt install git ripgrep fd-find build-essential
+
+
 # 1. Install Neovim (AppImage v0.11.6)
 cd /tmp
-wget -q -O nvim.appimage https://github.com/neovim/neovim/releases/download/v0.11.6/nvim-linux-x86_64.appimage
+
+
+curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
 chmod +x nvim.appimage
 sudo mv nvim.appimage /usr/local/bin/nvim
 
