@@ -1,1 +1,1 @@
-echo "spootify install message"
+sudo snap install spotify

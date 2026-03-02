@@ -16,8 +16,9 @@ for script in install/*.sh; do
 
   # If yes, run the script
   if [[ $REPLY =~ ^[Yy]$ ]]; then
-    echo "Running $script..."
+    echo "installing $app_name..."
     bash "$script"
+    echo "$app_name installed"
   fi
 done
 

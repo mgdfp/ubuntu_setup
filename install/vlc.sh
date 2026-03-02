@@ -1,1 +1,1 @@
-echo "vlc install message"
+sudo apt install -y vlc
