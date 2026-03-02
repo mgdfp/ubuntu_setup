@@ -1,37 +1,43 @@
 #!/bin/bash
 set -e
 
-echo "Installing Neovim and Python dependencies..."
-# python3-venv is critical on Ubuntu 24.04 for isolated environments
+echo "Installing Neovim, Python, and Shell dependencies..."
+
+# 1. Install System Dependencies (added npm and unzip for Mason)
 sudo apt update
-sudo apt install -y libfuse2t64 make gcc python3-pip python3-venv python3-full luarocks tree-sitter-cli
+sudo apt install -y libfuse2t64 make gcc python3-pip python3-venv python3-full \
+  luarocks tree-sitter-cli git ripgrep fd-find build-essential npm unzip
 
-sudo apt install git ripgrep fd-find build-essential
-
-
-# 1. Install Neovim (AppImage v0.11.6)
+# 2. Install Neovim (AppImage)
 cd /tmp
-
-
 curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
 chmod +x nvim.appimage
 sudo mv nvim.appimage /usr/local/bin/nvim
 
-# 2. Install the 'pynvim' provider (needed for some Python plugins)
-# We use --break-system-packages or a venv; for a dev setup, a dedicated venv is cleaner
-python3 -m pip install --user --upgrade pynvim --break-system-packages || true
+# 3. Setup Dedicated Python Provider Environment
+mkdir -p ~/.local/share/nvim/venv
+python3 -m venv ~/.local/share/nvim/venv
+~/.local/share/nvim/venv/bin/pip install pynvim
 
-# 3. Setup LazyVim Starter (if not exists)
+# 4. Setup LazyVim Starter
 if [ ! -d "$HOME/.config/nvim" ]; then
   git clone https://github.com/LazyVim/starter ~/.config/nvim
   rm -rf ~/.config/nvim/.git
 fi
 
-# 4. Enable the Python "Extra" in LazyVim
-# This tells LazyVim to automatically install Pyright (LSP) and Ruff (Linter/Formatter)
-if [ -f "$HOME/.config/nvim/lua/config/lazy.lua" ]; then
-  # This uses 'sed' to uncomment the python extra in the LazyVim config
-  sed -i 's/-- { import = "lazyvim.plugins.extras.lang.python" }/{ import = "lazyvim.plugins.extras.lang.python" }/' "$HOME/.config/nvim/lua/config/lazy.lua"
-fi
+# 5. Enable Python and Shell "Extras"
+mkdir -p "$HOME/.config/nvim/lua/plugins"
+cat <<EOF > "$HOME/.config/nvim/lua/plugins/languages.lua"
+return {
+  { import = "lazyvim.plugins.extras.lang.python" },
+  { import = "lazyvim.plugins.extras.lang.sh" }
+}
+EOF
 
-echo "Neovim Python Environment Setup Complete!"
+# 6. Point Neovim to the dedicated Python provider
+mkdir -p "$HOME/.config/nvim/lua/config"
+cat <<EOF >> "$HOME/.config/nvim/lua/config/options.lua"
+vim.g.python3_host_prog = vim.fn.expand("~/.local/share/nvim/venv/bin/python")
+EOF
+
+echo "Neovim Setup Complete! Run 'nvim' to bootstrap the plugins."
