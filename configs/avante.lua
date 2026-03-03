@@ -7,6 +7,9 @@ return {
 		-- Change to "openai" if you prefer ChatGPT
 		provider = "gemini",
 		auto_suggestions_provider = "gemini",
+		gemini = {
+			model = "gemini-2.5-flash",
+		},
 	},
 	build = "make",
 	dependencies = {
