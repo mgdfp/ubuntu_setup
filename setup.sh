@@ -57,6 +57,7 @@ fi
 echo ""
 echo "Updating system..."
 sudo apt update -y
+sudo apt upgrade -y
 
 for script in "${selected_scripts[@]}"; do
   app_name=$(basename "$script" .sh)
