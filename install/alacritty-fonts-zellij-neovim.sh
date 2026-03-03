@@ -77,9 +77,17 @@ fi
 mkdir -p "$HOME/.config/nvim/lua/plugins"
 
 cp "$SCRIPT_DIR/../configs/languages.lua" ~/.config/nvim/lua/plugins/languages.lua
+cp "$SCRIPT_DIR/../configs/avante.lua" ~/.config/nvim/lua/plugins/avante.lua
 
 # 6. Apply custom options config - FIXED DESTINATION PATH
 mkdir -p "$HOME/.config/nvim/lua/config"
 cp "$SCRIPT_DIR/../configs/options.lua" ~/.config/nvim/lua/config/options.lua
 
+echo "Setting up Gemini API key..."
+if ! grep -q "GEMINI_API_KEY" ~/.bashrc; then
+  echo 'export GEMINI_API_KEY="AIzaSyBHwCa-QecXMfYsWM76ghKXfgm2zi4pDqA"' >>~/.bashrc
+  echo "API key added to .bashrc."
+else
+  echo "API key already exists in .bashrc."
+fi
 echo "Neovim Setup Complete! Run 'nvim' to bootstrap the plugins."
