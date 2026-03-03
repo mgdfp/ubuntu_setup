@@ -48,6 +48,9 @@ sudo update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emula
 sudo update-alternatives --set x-terminal-emulator /usr/bin/alacritty
 gsettings set org.gnome.desktop.default-applications.terminal exec 'alacritty'
 
+echo "configuring zellij"
+mkdir -p ~/.config/zellij
+cp "$SCRIPT_DIR/../configs/zellij.kdl" ~/.config/zellij/config.kdl
 echo "Alacritty and Zellij setup complete!"
 
 echo "Installing Neovim, Python, and Shell dependencies..."
