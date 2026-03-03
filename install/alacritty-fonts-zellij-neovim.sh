@@ -80,6 +80,6 @@ cp "$SCRIPT_DIR/../configs/languages.lua" ~/.config/nvim/lua/plugins/languages.l
 
 # 6. Point Neovim to the dedicated Python provider
 mkdir -p "$HOME/.config/nvim/lua/config"
-cp "$SCRIPT_DIR/../configs/options.lua" ~/.config/nvim/lua/plugins/options.lua
+cp "$SCRIPT_DIR/../configs/options.lua" ~/.config/nvim/lua/config/options.lua
 
 echo "Neovim Setup Complete! Run 'nvim' to bootstrap the plugins."
