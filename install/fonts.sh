@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+sudo apt update
+
 # Create font directory if it doesn't exist
 FONT_DIR="$HOME/.local/share/fonts"
 mkdir -p "$FONT_DIR"
@@ -28,28 +30,70 @@ fc-cache -f
 echo "Fonts installed successfully!"
 
 echo "Installing Alacritty and Zellij..."
-sudo apt update
-sudo apt install -y alacritty zellij
+sudo apt install -y alacritty
+sudo snap install zellij --classic
 
 echo "Configuring Alacritty..."
 mkdir -p ~/.config/alacritty
 
 # Create a single, minimal alacritty.toml
-cat <<EOF >~/.config/alacritty/alacritty.toml
-[font]
-size = 12.0
 
-[font.normal]
-# The patched name for Cascadia Code Nerd Font
-family = "CaskaydiaCove Nerd Font"
-style = "Regular"
+cat <<EOF >~/.config/alacritty/alacritty.toml
+[env]
+TERM = "xterm-256color"
+
+[shell]
+program = "zellij"
+
+[font]
+normal = { family = "CaskaydiaMono Nerd Font", style = "Regular" }
+bold = { family = "CaskaydiaMono Nerd Font", style = "Bold" }
+italic = { family = "CaskaydiaMono Nerd Font", style = "Italic" }
+size = 9
 
 [window]
-padding = { x = 10, y = 10 }
+padding.x = 16
+padding.y = 14
 dynamic_padding = true
+dimensions.columns = 121
+dimensions.lines = 40
+decorations = "full"
+opacity = 0.98
 
 [scrolling]
 history = 10000
+
+[colors]
+
+[colors.primary]
+background = '#1a1b26'
+foreground = '#a9b1d6'
+
+# Normal colors
+[colors.normal]
+black = '#32344a'
+red = '#f7768e'
+green = '#9ece6a'
+yellow = '#e0af68'
+blue = '#7aa2f7'
+magenta = '#ad8ee6'
+cyan = '#449dab'
+white = '#787c99'
+
+# Bright colors
+[colors.bright]
+black = '#444b6a'
+red = '#ff7a93'
+green = '#b9f27c'
+yellow = '#ff9e64'
+blue = '#7da6ff'
+magenta = '#bb9af7'
+cyan = '#0db9d7'
+white = '#acb0d0'
+
+[colors.selection]
+background = '#7aa2f7'
+
 EOF
 
 echo "Setting Alacritty as the default terminal..."
@@ -58,11 +102,3 @@ sudo update-alternatives --set x-terminal-emulator /usr/bin/alacritty
 gsettings set org.gnome.desktop.default-applications.terminal exec 'alacritty'
 
 echo "Alacritty and Zellij setup complete!"
-
-cat <<'EOF' >>~/.bashrc
-
-# Auto-start Zellij in Alacritty
-if [ "$TERM" = "alacritty" ] && [ -z "$ZELLIJ" ]; then
-  exec zellij attach -c main
-fi
-EOF
