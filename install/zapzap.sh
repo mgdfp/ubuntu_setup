@@ -1,10 +1,16 @@
 #!/bin/bash
-set -e
 
-# Install ZapZap via Snap (much smoother than Flatpak for scripts)
-sudo snap install zapzap
+# Install ZapZap via Flatpak
+sudo flatpak install flathub com.rtosta.zapzap -y
 
-echo "ZapZap installed. To enable minimize-on-close:"
-echo "1. Open ZapZap from your menu."
-echo "2. Go to Settings (Gear Icon)."
-echo "3. Check 'Run in background' and 'Close to tray'."
+# Create the autostart directory if it doesn't exist
+mkdir -p ~/.config/autostart
+
+# Generate the autostart file for ZapZap
+cat <<EOF >~/.config/autostart/com.rtosta.zapzap.desktop
+[Desktop Entry]
+Name=ZapZap
+Exec=flatpak run com.rtosta.zapzap --hideStart
+Type=Application
+X-GNOME-Autostart-enabled=true
+EOF
