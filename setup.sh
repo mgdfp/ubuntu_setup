@@ -85,4 +85,6 @@ if [ ${#selected_scripts[@]} -gt 0 ]; then
   done
 fi
 
+bash "$SCRIPT_DIR"/dock.sh
+
 echo "All installations complete!"
