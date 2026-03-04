@@ -1,0 +1,14 @@
+# Secrets and Keys
+.ssh/
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+
+# Environment Variables
+.env
+*.secret
+
+# Terminal History
+.bash_history
+.python_history

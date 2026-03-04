@@ -8,10 +8,18 @@ echo "Configuring GNOME Desktop..."
 gsettings set org.gnome.mutter dynamic-workspaces false
 gsettings set org.gnome.desktop.wm.preferences num-workspaces 6
 
-# Enable workspace numbers in the top bar (requires a GNOME extension or specific shell theme)
-# On standard Ubuntu, we can at least ensure the switcher shows them:
-# gsettings set org.gnome.shell.overrides edge-tiling true
-# that setting does not exist. get error: No such schema “org.gnome.shell.overrides”
-#
-#
+# 1. Download the extension (v26 is compatible with Ubuntu 24.04/GNOME 46)
+cd /tmp
+wget -qO space-bar.zip "https://extensions.gnome.org/extension-data/space-barluchrioh.v26.shell-extension.zip"
+
+# 2. Install it to your local extensions folder
+gnome-extensions install space-bar.zip --force
+
+# 3. Enable it
+gnome-extensions enable space-bar@luchrioh
+
+# 4. Clean up
+rm space-bar.zip
+cd -
+
 echo "GNOME Desktop configured! You may need to log out and back in for all changes to take effect."
