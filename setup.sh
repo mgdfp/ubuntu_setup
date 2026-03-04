@@ -20,8 +20,8 @@ echo "--- Selecting Optional Applications ---"
 selected_scripts=()
 
 # 1. Ask the questions
-if [ -d "$SCRIPT_DIR/../optional_install" ]; then
-  for script in "$SCRIPT_DIR/../optional_install"/*.sh; do
+if [ -d "$SCRIPT_DIR/optional_install" ]; then
+  for script in "$SCRIPT_DIR/optional_install"/*.sh; do
     [ -e "$script" ] || continue
 
     app_name=$(basename "$script" .sh)
@@ -39,7 +39,7 @@ fi
 echo ""
 echo "--- The following will be installed: ---"
 echo "Core Apps (Compulsory):"
-for script in "$SCRIPT_DIR/../install"/*.sh; do
+for script in "$SCRIPT_DIR/install"/*.sh; do
   [ -e "$script" ] || continue
   echo "  - $(basename "$script" .sh)"
 done
@@ -68,7 +68,7 @@ sudo apt autopurge -y && sudo apt autoclean -y
 
 # Run compulsory installs
 echo "--- Running Core Installations ---"
-for script in "$SCRIPT_DIR/../install"/*.sh; do
+for script in "$SCRIPT_DIR/install"/*.sh; do
   [ -e "$script" ] || continue
   app_name=$(basename "$script" .sh)
   echo ">>> Installing $app_name..."
