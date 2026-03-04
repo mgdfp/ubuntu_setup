@@ -6,17 +6,14 @@ echo "Configuring Dock Favorites..."
 # 1. Your desired apps (in order from top to bottom / left to right)
 apps=(
   "google-chrome.desktop"
-  "org.gnome.Terminal.desktop"
+  "Alacritty.desktop"
   "org.gnome.Nautilus.desktop"
-  "code.desktop"
-  "nvim.desktop"
+  "code_code.desktop"
   "obsidian_obsidian.desktop"
-  "xournalpp.desktop"
-  "whatsapp.desktop"
-  "zapzap_zapzap.desktop"
-  "ledger-live.desktop"
+  "com.github.xournalpp.xournalpp.desktop"
+  "spotify_spotify.desktop"
+  "bitwarden_bitwarden.desktop"
   "org.gnome.Settings.desktop"
-  "org.gnome.BitWarden.desktop"
 )
 
 installed_apps=()
