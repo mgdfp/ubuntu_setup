@@ -16,6 +16,7 @@ apps=(
   "zapzap_zapzap.desktop"
   "ledger-live.desktop"
   "org.gnome.Settings.desktop"
+  "org.gnome.BitWarden.desktop"
 )
 
 installed_apps=()
