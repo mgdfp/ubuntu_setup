@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+# Get the directory where this script actually lives
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 # Ask for the administrator password upfront
 sudo -v
 
@@ -11,38 +14,42 @@ while true; do
   kill -0 "$$" || exit
 done 2>/dev/null &
 
-echo "--- Selecting Applications ---"
+echo "--- Selecting Optional Applications ---"
 
-# Array to hold the scripts you choose to run
+# Array to hold the optional scripts you choose to run
 selected_scripts=()
 
 # 1. Ask the questions
-for script in install/*.sh; do
-  # Skip if no .sh files exist
-  [ -e "$script" ] || continue
+if [ -d "$SCRIPT_DIR/../optional_install" ]; then
+  for script in "$SCRIPT_DIR/../optional_install"/*.sh; do
+    [ -e "$script" ] || continue
 
-  app_name=$(basename "$script" .sh)
+    app_name=$(basename "$script" .sh)
 
-  read -p "Install $app_name? (y/n) " -n 1 -r
-  echo
+    read -p "Install $app_name? (y/n) " -n 1 -r
+    echo
 
-  if [[ $REPLY =~ ^[Yy]$ ]]; then
-    selected_scripts+=("$script")
-  fi
-done
-
-# Exit if nothing was selected
-if [ ${#selected_scripts[@]} -eq 0 ]; then
-  echo "Nothing selected for installation. Exiting."
-  exit 0
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+      selected_scripts+=("$script")
+    fi
+  done
 fi
 
 # 2. Summary and Confirmation
 echo ""
-echo "--- Ready to install: ---"
-for script in "${selected_scripts[@]}"; do
-  echo "- $(basename "$script" .sh)"
+echo "--- The following will be installed: ---"
+echo "Core Apps (Compulsory):"
+for script in "$SCRIPT_DIR/../install"/*.sh; do
+  [ -e "$script" ] || continue
+  echo "  - $(basename "$script" .sh)"
 done
+
+if [ ${#selected_scripts[@]} -gt 0 ]; then
+  echo "Optional Apps (Selected):"
+  for script in "${selected_scripts[@]}"; do
+    echo "  - $(basename "$script" .sh)"
+  done
+fi
 echo "-------------------------"
 
 read -p "Proceed with installation? (y/n) " -n 1 -r
@@ -59,10 +66,23 @@ echo "Updating system..."
 sudo apt update -y
 sudo apt upgrade -y
 
-for script in "${selected_scripts[@]}"; do
+# Run compulsory installs
+echo "--- Running Core Installations ---"
+for script in "$SCRIPT_DIR/../install"/*.sh; do
+  [ -e "$script" ] || continue
   app_name=$(basename "$script" .sh)
   echo ">>> Installing $app_name..."
   bash "$script"
 done
+
+# Run optional installs
+if [ ${#selected_scripts[@]} -gt 0 ]; then
+  echo "--- Running Optional Installations ---"
+  for script in "${selected_scripts[@]}"; do
+    app_name=$(basename "$script" .sh)
+    echo ">>> Installing $app_name..."
+    bash "$script"
+  done
+fi
 
 echo "All installations complete!"
