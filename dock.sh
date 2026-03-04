@@ -43,4 +43,7 @@ favorites_list="[${favorites_list%,}]"
 
 gsettings set org.gnome.shell favorite-apps "$favorites_list"
 
+# fix dock behaviour so that if clicking when an app is open it get minimized. if several windows are open a preview is shown.
+gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize-or-previews'
+
 echo "Dock configured successfully!"
