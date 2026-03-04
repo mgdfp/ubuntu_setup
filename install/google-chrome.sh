@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
+echo "Installing google chrome"
 
 # Browse the web with the most popular browser. See https://www.google.com/chrome/
 cd /tmp

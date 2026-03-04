@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
+
 echo "Configuring custom keyboard shortcuts..."
 
 # 1. Unset the default 'home' key so it doesn't conflict

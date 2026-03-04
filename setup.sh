@@ -61,10 +61,10 @@ if [[ ! $REPLY =~ ^[Yy]$ ]]; then
 fi
 
 # 3. Execution
-echo ""
-echo "Updating system..."
-sudo apt update -y
-sudo apt upgrade -y
+echo "Updating and cleaning base system..."
+sudo snap refresh && sudo systemctl daemon-reload
+sudo apt update && sudo apt full-upgrade -y
+sudo apt autopurge -y && sudo apt autoclean -y
 
 # Run compulsory installs
 echo "--- Running Core Installations ---"

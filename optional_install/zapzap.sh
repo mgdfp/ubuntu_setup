@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # Install ZapZap via Flatpak
 sudo flatpak install flathub com.rtosta.zapzap -y

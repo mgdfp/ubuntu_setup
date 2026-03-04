@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 sudo add-apt-repository universe -y
 sudo apt update
