@@ -53,21 +53,4 @@ for i in {1..9}; do
   gsettings set org.gnome.shell.keybindings "switch-to-application-$i" "['<Alt>$i']"
 done
 
-sudo apt install -y gnome-shell-extension-manager gir1.2-gtop-2.0 gir1.2-clutter-1.0 pipx
-pipx install gnome-extensions-cli --system-site-packages
-
-# gnome-extensions disable ubuntu-appindicators@ubuntu.com
-
-gum confirm "To install Gnome extensions, you need to accept some confirmations. Ready?"
-
-gext install space-bar@luchrioh
-
-sudo cp ~/.local/share/gnome-shell/extensions/space-bar\@luchrioh/schemas/org.gnome.shell.extensions.space-bar.gschema.xml /usr/share/glib-2.0/schemas/
-
-# Configure Space Bar
-gsettings set org.gnome.shell.extensions.space-bar.behavior smart-workspace-names false
-gsettings set org.gnome.shell.extensions.space-bar.shortcuts enable-activate-workspace-shortcuts false
-gsettings set org.gnome.shell.extensions.space-bar.shortcuts enable-move-to-workspace-shortcuts true
-gsettings set org.gnome.shell.extensions.space-bar.shortcuts open-menu "@as []"
-
 echo "Dock configured successfully!"
