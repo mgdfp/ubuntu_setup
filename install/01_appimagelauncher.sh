@@ -3,7 +3,7 @@ set -e
 
 # 1. Install dependencies for Ubuntu 24.04 (Noble)
 sudo apt update -qq > /dev/null
-sudo apt install -y -qq libsqlite3-0 libfuse2t64 >/dev/null
+sudo apt install -y -qq libsqlite3-0 libfuse2t64 >/dev/null 2>&1
 
 # 2. Scrape the latest release (including pre-releases/betas)
 cd /tmp
@@ -19,7 +19,7 @@ echo "Downloading latest AppImageLauncher: $URL"
 wget -q -O appimagelauncher.deb "$URL"
 
 # 3. Install via apt (to handle any other sub-dependencies)
-sudo apt install -y -qq ./appimagelauncher.deb >/dev/null
+sudo apt install -y -qq ./appimagelauncher.deb >/dev/null 2>&1
 
 # 4. Cleanup
 rm appimagelauncher.deb

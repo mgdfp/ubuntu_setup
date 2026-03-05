@@ -13,7 +13,7 @@ OBSIDIAN_VERSION=$(curl -sSLO https://api.github.com/repos/obsidianmd/obsidian-r
 wget -q -O obsidian.deb "https://github.com/obsidianmd/obsidian-releases/releases/download/v${OBSIDIAN_VERSION}/obsidian_${OBSIDIAN_VERSION}_amd64.deb"
 
 # 3. Install it natively
-sudo apt install -y -qq ./obsidian.deb >/dev/null
+sudo apt install -y -qq ./obsidian.deb >/dev/null 2>&1
 
 # 4. Cleanup
 rm obsidian.deb
