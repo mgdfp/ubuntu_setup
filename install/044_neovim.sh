@@ -27,4 +27,22 @@ mkdir -p ~/.local/share/nvim/venv
 python3 -m venv ~/.local/share/nvim/venv
 ~/.local/share/nvim/venv/bin/pip install pynvim
 
+echo "Creating Neovim desktop entry..."
+mkdir -p ~/.local/share/icons ~/.local/share/applications
+
+# Download official Neovim icon
+wget -qO ~/.local/share/icons/nvim.png "https://raw.githubusercontent.com/neovim/neovim/master/runtime/neovim.png"
+
+# Create the desktop shortcut
+cat <<'EOF' >~/.local/share/applications/nvim.desktop
+[Desktop Entry]
+Name=Neovim
+GenericName=Text Editor
+Exec=alacritty -e nvim %F
+Terminal=false
+Type=Application
+Icon=nvim
+Categories=TextEditor;Development;
+EOF
+
 echo "Neovim Setup Complete! Run 'nvim' to bootstrap the plugins."

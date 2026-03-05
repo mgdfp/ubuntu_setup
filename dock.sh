@@ -14,6 +14,7 @@ apps=(
   "spotify_spotify.desktop"
   "bitwarden_bitwarden.desktop"
   "org.gnome.Settings.desktop"
+  "nvim.desktop"
 )
 
 installed_apps=()
@@ -45,5 +46,11 @@ gsettings set org.gnome.shell favorite-apps "$favorites_list"
 
 # fix dock behaviour so that if clicking when an app is open it get minimized. if several windows are open a preview is shown.
 gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize-or-previews'
+
+# setting up so that if we press alt+1 it will open the first app in the dock and so on.
+echo "Setting Alt+Number shortcuts for the dock..."
+for i in {1..9}; do
+  gsettings set org.gnome.shell.keybindings "switch-to-application-$i" "['<Alt>$i']"
+done
 
 echo "Dock configured successfully!"
