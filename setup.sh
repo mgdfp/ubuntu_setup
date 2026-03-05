@@ -64,8 +64,8 @@ fi
 echo "Updating and cleaning base system..."
 sudo snap refresh
 sudo systemctl daemon-reload
-sudo apt update -qq >/dev/null 
-sudo apt full-upgrade -y -qq >/dev/null 
+sudo apt update -qq
+sudo apt full-upgrade -y -qq
 sudo apt autopurge
 sudo apt autoclean
 
