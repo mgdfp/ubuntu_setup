@@ -8,7 +8,7 @@ wget -q -O - https://raw.githubusercontent.com/LedgerHQ/udev-rules/master/add_ud
 # 2. Download the AppImage
 echo "Downloading Ledger Live..."
 mkdir -p ~/Downloads
-wget https://download.live.ledger.com/latest/linux -O ~/Downloads/ledger-live.AppImage
+wget -q https://download.live.ledger.com/latest/linux -O ~/Downloads/ledger-live.AppImage
 
 # 3. Make it executable
 chmod +x ~/Downloads/ledger-live.AppImage

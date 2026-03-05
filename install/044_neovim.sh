@@ -18,7 +18,7 @@ sudo ln -sf $(which fdfind) /usr/local/bin/fd
 
 # 2. Install Neovim (AppImage)
 cd /tmp
-curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
+curl -sSLO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
 chmod +x nvim-linux-x86_64.appimage
 sudo mv nvim-linux-x86_64.appimage /usr/local/bin/nvim
 

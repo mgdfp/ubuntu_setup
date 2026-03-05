@@ -7,13 +7,13 @@ echo "Installing Obsidian..."
 cd /tmp
 
 # 1. Fetch the latest version number from GitHub
-OBSIDIAN_VERSION=$(curl -s https://api.github.com/repos/obsidianmd/obsidian-releases/releases/latest | grep -Po '"tag_name": "v\K[^"]*')
+OBSIDIAN_VERSION=$(curl -sSLO https://api.github.com/repos/obsidianmd/obsidian-releases/releases/latest | grep -Po '"tag_name": "v\K[^"]*')
 
 # 2. Download the .deb package
 wget -q -O obsidian.deb "https://github.com/obsidianmd/obsidian-releases/releases/download/v${OBSIDIAN_VERSION}/obsidian_${OBSIDIAN_VERSION}_amd64.deb"
 
 # 3. Install it natively
-sudo apt install -y -qq ./obsidian.deb > /dev/null
+sudo apt install -y -qq ./obsidian.deb >/dev/null
 
 # 4. Cleanup
 rm obsidian.deb
