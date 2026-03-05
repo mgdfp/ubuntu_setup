@@ -28,21 +28,24 @@ python3 -m venv ~/.local/share/nvim/venv
 ~/.local/share/nvim/venv/bin/pip install pynvim
 
 echo "Creating Neovim desktop entry..."
+# Ensure local directories exist
 mkdir -p ~/.local/share/icons ~/.local/share/applications
 
-# Download official Neovim icon
-wget -qO ~/.local/share/icons/nvim.png "https://raw.githubusercontent.com/neovim/neovim/master/runtime/neovim.png"
+# Download the Neovim icon
+wget -qO ~/.local/share/icons/nvim.png "https://raw.githubusercontent.com/neovim/neovim/main/runtime/neovim.png"
 
-# Create the desktop shortcut
-cat <<'EOF' >~/.local/share/applications/nvim.desktop
+# Create a clean desktop entry that uses your Alacritty terminal
+cat <<EOF >~/.local/share/applications/nvim.desktop
 [Desktop Entry]
+Type=Application
 Name=Neovim
 GenericName=Text Editor
+Comment=Edit text files
+Icon=nvim
 Exec=alacritty -e nvim %F
 Terminal=false
-Type=Application
-Icon=nvim
-Categories=TextEditor;Development;
+Categories=Utilities;TextEditor;Development;
+Keywords=Text;Editor;
+StartupNotify=false
 EOF
-
 echo "Neovim Setup Complete! Run 'nvim' to bootstrap the plugins."
