@@ -1,4 +1,4 @@
 #!/bin/bash
 set -e
 
-sudo apt install -y xournalpp
+sudo apt install -y -qq xournalpp > /dev/null

@@ -4,13 +4,13 @@ set -e
 # Get the directory where this script actually lives
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-sudo apt update
+sudo apt update -qq > /dev/null
 
 echo "Installing Neovim, Python, and Shell dependencies..."
 
 # 1. Install System Dependencies
-sudo apt install -y libfuse2t64 make gcc python3-pip python3-venv python3-full \
-  luarocks tree-sitter-cli git ripgrep fd-find build-essential npm unzip
+sudo apt install -y -qq libfuse2t64 make gcc python3-pip python3-venv python3-full \
+  luarocks tree-sitter-cli git ripgrep fd-find build-essential npm unzip > /dev/null
 
 # Ubuntu installs fd-find as 'fdfind', but Neovim plugins hardcode the command 'fd'.
 # This system-wide symlink ensures plugins like Telescope can actually find it.

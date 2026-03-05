@@ -4,7 +4,7 @@ set -e
 # Get the directory where this script actually lives
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-sudo apt update
+sudo apt update -qq > /dev/null
 
 # Create font directory if it doesn't exist
 FONT_DIR="$HOME/.local/share/fonts"

@@ -1,4 +1,4 @@
 #!/bin/bash
 set -e
 
-sudo apt install -y wireguard
+sudo apt install -y -qq wireguard > /dev/null

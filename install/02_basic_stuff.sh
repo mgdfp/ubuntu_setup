@@ -1,13 +1,13 @@
 #!/bin/bash
 set -e
 
-sudo apt update
+sudo apt update -qq > /dev/null
 # Install the GNOME Shell extension manager
-sudo apt install -y gnome-shell-extension-manager
+sudo apt install -y -qq gnome-shell-extension-manager > /dev/null
 # to get all the codecs.
-sudo apt install -y ubuntu-restricted-extras
-sudo apt install -y unzip p7zip unrar
-sudo apt install -y git gitk meld curl wget
+sudo apt install -y -qq ubuntu-restricted-extras > /dev/null
+sudo apt install -y -qq unzip p7zip unrar > /dev/null
+sudo apt install -y -qq git gitk meld curl wget > /dev/null
 
 echo "Installing modern terminal tools..."
 
@@ -17,9 +17,9 @@ echo "Installing modern terminal tools..."
 # ripgrep: A lightning-fast search tool (required by many Neovim plugins)
 # bat: Replaces 'cat' (adds syntax highlighting to files printed in the terminal)
 
-sudo apt install -y eza zoxide fzf ripgrep bat
+sudo apt install -y -qq eza zoxide fzf ripgrep bat > /dev/null
 
 echo "Terminal tools installed!"
 
 # etension manager is a gui for extension manager.
-sudo apt install -y gnome-shell-extension-manager
+sudo apt install -y -qq gnome-shell-extension-manager > /dev/null

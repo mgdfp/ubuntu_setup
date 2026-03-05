@@ -62,9 +62,12 @@ fi
 
 # 3. Execution
 echo "Updating and cleaning base system..."
-sudo snap refresh && sudo systemctl daemon-reload
-sudo apt update && sudo apt full-upgrade -y
-sudo apt autopurge -y && sudo apt autoclean -y
+sudo snap refresh
+sudo systemctl daemon-reload
+sudo apt update -qq > /dev/null >/dev/null
+sudo apt full-upgrade -y -qq >/dev/null
+sudo apt autopurge
+sudo apt autoclean
 
 # Run compulsory installs
 echo "--- Running Core Installations ---"
