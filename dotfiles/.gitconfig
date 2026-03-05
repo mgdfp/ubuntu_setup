@@ -1,0 +1,30 @@
+[user]
+	name = Morgan
+	email = morgangdfp@icloud.com
+[core]
+	editor = nvim
+	autocrlf = input
+  excludesfile = ~/.gitignore_global
+[init]
+	defaultBranch = main
+[pull]
+	rebase = true
+[push]
+	autoSetupRemote = true
+[fetch]
+	prune = true
+[color]
+	ui = auto
+[diff]
+	tool = meld
+[difftool]
+	prompt = false
+[difftool "meld"]
+	cmd = meld "$LOCAL" "$REMOTE"
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	st = status
+	d = difftool
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit

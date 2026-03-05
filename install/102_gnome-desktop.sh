@@ -1,6 +1,5 @@
 #!/bin/bash
 set -e
-
 echo "Configuring GNOME Desktop..."
 
 # --- WORKSPACES ---
