@@ -31,9 +31,6 @@ echo "Creating Neovim desktop entry..."
 # Ensure local directories exist
 mkdir -p ~/.local/share/icons ~/.local/share/applications
 
-# Download the Neovim icon
-wget -qO ~/.local/share/icons/nvim.png "https://raw.githubusercontent.com/neovim/neovim/main/runtime/neovim.png"
-
 # Create a clean desktop entry that uses your Alacritty terminal
 cat <<EOF >~/.local/share/applications/nvim.desktop
 [Desktop Entry]
