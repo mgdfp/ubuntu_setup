@@ -4,13 +4,13 @@ set -e
 # Get the directory where this script actually lives
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-sudo apt update -qq >/dev/null 
+sudo apt update -qq >/dev/null
 
 echo "Installing Neovim, Python, and Shell dependencies..."
 
 # 1. Install System Dependencies
 sudo apt install -y -qq libfuse2t64 make gcc python3-pip python3-venv python3-full \
-  luarocks tree-sitter-cli git ripgrep fd-find build-essential npm unzip >/dev/null 
+  luarocks tree-sitter-cli git ripgrep fd-find build-essential npm unzip >/dev/null
 
 # Ubuntu installs fd-find as 'fdfind', but Neovim plugins hardcode the command 'fd'.
 # This system-wide symlink ensures plugins like Telescope can actually find it.
@@ -29,7 +29,9 @@ python3 -m venv ~/.local/share/nvim/venv
 
 echo "Creating Neovim desktop entry..."
 # Ensure local directories exist
-mkdir -p ~/.local/share/icons ~/.local/share/applications
+mkdir -p ~/.local/share/icons/hicolor/128x128/apps/ ~/.local/share/applications
+
+cp "$SCRIPT_DIR/../icons/nvim.png" ~/.local/share/icons/hicolor/128x128/apps/nvim.png
 
 # Create a clean desktop entry that uses your Alacritty terminal
 cat <<EOF >~/.local/share/applications/nvim.desktop
@@ -46,3 +48,7 @@ Keywords=Text;Editor;
 StartupNotify=false
 EOF
 echo "Neovim Setup Complete! Run 'nvim' to bootstrap the plugins."
+
+# 4. Refresh the caches so the dock sees it immediately
+gtk-update-icon-cache ~/.local/share/icons/hicolor -f -t >/dev/null || true
+update-desktop-database ~/.local/share/applications >/dev/null || true
