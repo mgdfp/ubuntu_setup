@@ -20,6 +20,3 @@ echo "Installing modern terminal tools..."
 sudo apt install -y -qq eza zoxide fzf ripgrep bat >/dev/null 2>&1
 
 echo "Terminal tools installed!"
-
-# etension manager is a gui for extension manager.
-sudo apt install -y -qq gnome-shell-extension-manager >/dev/null 2>&1
