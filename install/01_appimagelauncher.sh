@@ -3,7 +3,7 @@ set -e
 
 # 1. Install dependencies for Ubuntu 24.04 (Noble)
 sudo apt update -qq > /dev/null
-sudo apt install -y -qq libsqlite3-0 libfuse2t64  
+sudo apt install -y -qq libsqlite3-0 libfuse2t64 curl
 
 # 2. Scrape the latest release (including pre-releases/betas)
 cd /tmp
