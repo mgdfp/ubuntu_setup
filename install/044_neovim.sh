@@ -4,13 +4,16 @@ set -e
 # Get the directory where this script actually lives
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-sudo apt update -qq 
+sudo apt update -qq
+
+#removing nvim setup folders in case there is some corrupt files or locks.
+rm -rf ~/.local/share/nvim/ ~/.local/state/nvim/ ~/.cache/nvim/
 
 echo "Installing Neovim, Python, and Shell dependencies..."
 
 # 1. Install System Dependencies
 sudo apt install -y -qq libfuse2t64 make gcc python3-pip python3-venv python3-full \
-  luarocks tree-sitter-cli git ripgrep fd-find build-essential npm unzip 
+  luarocks tree-sitter-cli git ripgrep fd-find build-essential npm unzip
 
 # Ubuntu installs fd-find as 'fdfind', but Neovim plugins hardcode the command 'fd'.
 # This system-wide symlink ensures plugins like Telescope can actually find it.
@@ -50,5 +53,5 @@ EOF
 echo "Neovim Setup Complete! Run 'nvim' to bootstrap the plugins."
 
 # 4. Refresh the caches so the dock sees it immediately
-gtk-update-icon-cache ~/.local/share/icons/hicolor -f -t  || true
-update-desktop-database ~/.local/share/applications  || true
+gtk-update-icon-cache ~/.local/share/icons/hicolor -f -t || true
+update-desktop-database ~/.local/share/applications || true
