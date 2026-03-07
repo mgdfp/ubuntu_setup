@@ -64,9 +64,6 @@ if command -v fzf &>/dev/null; then
   fi
 fi
 
-# silence wayland/qt warning triggered by background tools
-export QT_QPA_PLATFORM="wayland;xcb"
-
 # Editor used by CLI
 export EDITOR="nvim"
 export SUDO_EDITOR="$EDITOR"
