@@ -38,6 +38,12 @@ alias gcad='git commit -a --amend'
 compress() { tar -czf "${1%/}.tar.gz" "${1%/}"; }
 alias decompress="tar -xzf"
 
+# copy output of command to clipboard
+clip() {
+  "$@" 2>&1 | tee >(wl-copy)
+  return ${PIPESTATUS[0]}
+}
+
 # Prompt
 force_color_prompt=yes
 color_prompt=yes
