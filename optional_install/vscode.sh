@@ -2,6 +2,10 @@
 set -e
 
 install_vscode_apt() {
+  echo "Cleaning up any conflicting legacy VS Code repositories and keys..."
+  sudo grep -rl "packages.microsoft.com/repos/code" /etc/apt/sources.list.d/ 2>/dev/null | sudo xargs -r rm -f
+  sudo rm -f /usr/share/keyrings/microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
+
   echo "Installing VS Code (APT version)..."
   sudo apt update
   sudo apt install -y wget gpg apt-transport-https
