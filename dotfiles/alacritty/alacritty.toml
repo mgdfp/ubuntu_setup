@@ -52,3 +52,30 @@ white = '#acb0d0'
 
 [colors.selection]
 background = '#7aa2f7'
+text = '#1a1b26'
+
+# Cursor
+[colors.cursor]
+text = '#1a1b26'
+cursor = '#c0caf5'
+
+
+[colors.search.matches]
+foreground = '#1a1b26'
+background = '#ff9e64'
+
+[colors.search.focused_match]
+foreground = '#1a1b26'
+background = '#9ece6a'
+
+[colors.hints.start]
+foreground = '#1a1b26'
+background = '#e0af68'
+
+[colors.hints.end]
+foreground = '#1a1b26'
+background = '#7aa2f7'
+
+[colors.vi_mode_cursor]
+text = '#1a1b26'
+cursor = '#7aa2f7'

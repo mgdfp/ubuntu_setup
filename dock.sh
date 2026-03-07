@@ -53,4 +53,7 @@ for i in {1..9}; do
   gsettings set org.gnome.shell.keybindings "switch-to-application-$i" "['<Alt>$i']"
 done
 
+# set icons on dock to smaller size, default is 48 which is huge.
+gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 32
+
 echo "Dock configured successfully!"
