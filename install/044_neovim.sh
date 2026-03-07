@@ -6,6 +6,9 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 sudo apt update -qq
 
+sudo apt remove -y tree-sitter-cli
+sudo npm install -g tree-sitter-cli
+
 #removing nvim setup folders in case there is some corrupt files or locks.
 rm -rf ~/.local/share/nvim/ ~/.local/state/nvim/ ~/.cache/nvim/
 
