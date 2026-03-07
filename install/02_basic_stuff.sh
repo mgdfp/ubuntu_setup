@@ -20,7 +20,3 @@ echo "Installing modern terminal tools..."
 sudo apt install -y -qq eza zoxide fzf ripgrep bat
 
 echo "Terminal tools installed!"
-
-echo "installing apparmor"
-sudo apt install -y apparmor apparmor-utils
-sudo systemctl enable --now apparmor

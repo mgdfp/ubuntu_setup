@@ -3,3 +3,6 @@ vim.g.lazyvim_check_order = false
 
 -- Set the Python host to our isolated venv
 vim.g.python3_host_prog = vim.fn.expand("~/.local/share/nvim/venv/bin/python")
+
+-- Turn off relative line numbers.
+vim.opt.relativenumber = false
