@@ -1,22 +1,49 @@
 #!/bin/bash
 set -e
 
+# Get the directory where this script actually lives
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# Load shared functions
+source "$SCRIPT_DIR/../functions.sh"
+
+# ... rest of your script
+PACKAGES=(
+  "gnome-shell-extension-manager"
+  "ubuntu-restricted-extras"
+  "unzip"
+  "p7zip"
+  "unrar"
+  "git"
+  "gitk"
+  "meld"
+  "curl"
+  "wget"
+  "eza"
+  "zoxide"
+  "fzf"
+  "ripgrep"
+  "bat"
+  "gnome-tweaks"
+  "wl-clipboard"
+  "flameshot"
+  "gnome-sushi"
+  "vlc"
+)
+
+echo "Updating package lists..."
 sudo apt update -qq
-# Install the GNOME Shell extension manager
-sudo apt install -y -qq gnome-shell-extension-manager
-# to get all the codecs.
-sudo apt install -y -qq ubuntu-restricted-extras
-sudo apt install -y -qq unzip p7zip unrar
-sudo apt install -y -qq git gitk meld curl wget
 
-echo "Installing modern terminal tools..."
+echo "Checking and installing applications..."
 
-# eza: Replaces 'ls' (adds icons and colors)
-# zoxide: Replaces 'cd' (remembers your most used folders so you can type 'z docs' instead of 'cd ~/Documents')
-# fzf: A fuzzy finder for searching files instantly
-# ripgrep: A lightning-fast search tool (required by many Neovim plugins)
-# bat: Replaces 'cat' (adds syntax highlighting to files printed in the terminal)
+# 2. Loop through the list and check if the app is already installed, skip if it is.
+for pkg in "${PACKAGES[@]}"; do
+  if is_apt_installed "$pkg"; then
+    echo "  ✓ $pkg is already installed."
+  else
+    echo "  ➜ Installing $pkg..."
+    # Note: ubuntu-restricted-extras may prompt for a EULA agreement
+    sudo apt install -y -qq "$pkg"
+  fi
+done
 
-sudo apt install -y -qq eza zoxide fzf ripgrep bat
-
-echo "Terminal tools installed!"
+echo "Installation process complete!"

@@ -1,6 +1,10 @@
 #!/bin/bash
 set -e
 
+# Load shared functions
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/../functions.sh"
+
 # Check if it is already installed
 if is_apt_installed "appimagelauncher"; then
   echo "AppImageLauncher is already installed. Skipping..."

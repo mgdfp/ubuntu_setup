@@ -1,36 +1,6 @@
 #!/bin/bash
 set -e
 
-# Returns true (0) if the APT package is installed
-is_apt_installed() {
-  dpkg -s "$1" >/dev/null 2>&1
-}
-export -f is_apt_installed
-
-# Returns true (0) if the Snap package is installed
-is_snap_installed() {
-  snap list "$1" >/dev/null 2>&1
-}
-export -f is_snap_installed
-
-# Returns true (0) if the Flatpak ID is installed
-is_flatpak_installed() {
-  flatpak info "$1" >/dev/null 2>&1
-}
-export is_flatpak_installed
-
-# Returns true (0) if the command/binary exists in the system path
-is_command_installed() {
-  command -v "$1" >/dev/null 2>&1
-}
-export is_command_installed
-
-# Returns true (0) if the specific file/AppImage exists
-is_file_installed() {
-  [ -f "$1" ]
-}
-export is_file_installed
-
 # Get the directory where this script actually lives
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
@@ -118,6 +88,7 @@ if [ ${#selected_scripts[@]} -gt 0 ]; then
   done
 fi
 
+# Run the last scripts, have to be run at the end because they rely on everything else being installed.
 bash "$SCRIPT_DIR"/dock.sh
 bash "$SCRIPT_DIR"/dotfiles.sh
 

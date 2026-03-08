@@ -1,22 +1,24 @@
-# TODO maybe install git sync and stop the obsidian sync subscription.
 #!/bin/bash
 set -e
 
-echo "Installing Obsidian..."
+# Get the directory where this script actually lives
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# Load shared functions
+source "$SCRIPT_DIR/../functions.sh"
 
-cd /tmp
+# 1. Check if Flatpak is installed (using your shared function)
+if ! is_command_installed "flatpak"; then
+    echo "  ! Flatpak not found. Running flatpak setup first..."
+    # Assuming your flatpak script is in the same folder
+    source "$SCRIPT_DIR/../install/06_flatpak.sh"
+fi
 
-# 1. Fetch the latest version number from GitHub
-OBSIDIAN_VERSION=$(curl -s https://api.github.com/repos/obsidianmd/obsidian-releases/releases/latest | grep -Po '"tag_name": "v\K[^"]*')
+# 2. Install Obsidian via Flatpak
+if is_flatpak_installed "md.obsidian.Obsidian"; then
+    echo "  ✓ Obsidian is already installed."
+else
+    echo "  ➜ Installing Obsidian (Flatpak)..."
+    flatpak install -y flathub md.obsidian.Obsidian
+fi
 
-# 2. Download the .deb package
-wget -q -O obsidian.deb "https://github.com/obsidianmd/obsidian-releases/releases/download/v${OBSIDIAN_VERSION}/obsidian_${OBSIDIAN_VERSION}_amd64.deb"
-
-# 3. Install it natively
-sudo apt install -y -qq ./obsidian.deb  
-
-# 4. Cleanup
-rm obsidian.deb
-cd -
-
-echo "Obsidian installed successfully!"
+echo "Obsidian setup complete!"
