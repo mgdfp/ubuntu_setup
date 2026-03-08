@@ -28,6 +28,7 @@ PACKAGES=(
   "flameshot"
   "gnome-sushi"
   "vlc"
+  "npm"
 )
 
 echo "Updating package lists..."

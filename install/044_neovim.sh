@@ -1,47 +1,46 @@
-#!/bin/bash
-set -e
+#!/usr/bin/env bash
+set -euo pipefail
 
-# Get the directory where this script actually lives
+# Directory where this script lives (used for the icon path)
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# Load shared functions
-source "$SCRIPT_DIR/../functions.sh"
 
 sudo apt update -qq
 
-sudo apt remove -y tree-sitter-cli
-sudo npm install -g tree-sitter-cli
+# System dependencies (tree-sitter-cli from apt)
+sudo apt install -y -qq \
+  wget tar git ripgrep fd-find build-essential unzip \
+  python3-pip python3-venv python3-full \
+  luarocks tree-sitter-cli
 
-#removing nvim setup folders in case there is some corrupt files or locks.
+# Ubuntu installs fd-find as 'fdfind', but many plugins expect 'fd'
+sudo ln -sf "$(command -v fdfind)" /usr/local/bin/fd
+
+# Optional: wipe Neovim runtime dirs (keeps ~/.config/nvim intact)
 rm -rf ~/.local/share/nvim/ ~/.local/state/nvim/ ~/.cache/nvim/
 
-echo "Installing Neovim, Python, and Shell dependencies..."
+echo "Installing Neovim (Omakub/DHH method: stable tarball to /usr/local)..."
 
-# 1. Install System Dependencies
-sudo apt install -y -qq libfuse2t64 make gcc python3-pip python3-venv python3-full \
-  luarocks tree-sitter-cli git ripgrep fd-find build-essential npm unzip
-
-# Ubuntu installs fd-find as 'fdfind', but Neovim plugins hardcode the command 'fd'.
-# This system-wide symlink ensures plugins like Telescope can actually find it.
-sudo ln -sf $(which fdfind) /usr/local/bin/fd
-
-# 2. Install Neovim (AppImage)
 cd /tmp
-curl -sSLO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
-chmod +x nvim-linux-x86_64.appimage
-sudo mv nvim-linux-x86_64.appimage /usr/local/bin/nvim
+rm -rf nvim-linux-x86_64 nvim.tar.gz
 
-# 3. Setup Dedicated Python Provider Environment
+wget -O nvim.tar.gz "https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.tar.gz"
+tar -xf nvim.tar.gz
+sudo install nvim-linux-x86_64/bin/nvim /usr/local/bin/nvim
+sudo cp -R nvim-linux-x86_64/lib /usr/local/
+sudo cp -R nvim-linux-x86_64/share /usr/local/
+rm -rf nvim-linux-x86_64 nvim.tar.gz
+cd - >/dev/null
+
+# Python provider venv (optional but nice to keep)
 mkdir -p ~/.local/share/nvim/venv
 python3 -m venv ~/.local/share/nvim/venv
-~/.local/share/nvim/venv/bin/pip install pynvim
+~/.local/share/nvim/venv/bin/pip install -U pip pynvim
 
 echo "Creating Neovim desktop entry..."
-# Ensure local directories exist
 mkdir -p ~/.local/share/icons/hicolor/128x128/apps/ ~/.local/share/applications
 
 cp "$SCRIPT_DIR/../icons/nvim.png" ~/.local/share/icons/hicolor/128x128/apps/nvim.png
 
-# Create a clean desktop entry that uses your Alacritty terminal
 cat <<EOF >~/.local/share/applications/nvim.desktop
 [Desktop Entry]
 Type=Application
@@ -55,8 +54,9 @@ Categories=Utilities;TextEditor;Development;
 Keywords=Text;Editor;
 StartupNotify=false
 EOF
-echo "Neovim Setup Complete! Run 'nvim' to bootstrap the plugins."
 
-# 4. Refresh the caches so the dock sees it immediately
-gtk-update-icon-cache ~/.local/share/icons/hicolor -f -t || true
-update-desktop-database ~/.local/share/applications || true
+# Refresh caches (only if tools exist)
+command -v gtk-update-icon-cache >/dev/null 2>&1 && gtk-update-icon-cache ~/.local/share/icons/hicolor -f -t || true
+command -v update-desktop-database >/dev/null 2>&1 && update-desktop-database ~/.local/share/applications || true
+
+echo "Done."
