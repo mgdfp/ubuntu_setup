@@ -6,11 +6,15 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 sudo apt update -qq
 
-# System dependencies (tree-sitter-cli from apt)
+# System dependencies
 sudo apt install -y -qq \
   wget tar git ripgrep fd-find build-essential unzip \
   python3-pip python3-venv python3-full \
-  luarocks tree-sitter-cli
+  luarocks
+
+# tree sitter in apt is too old. remove if installed and get later version from npm.
+sudo apt remove -y tree-sitter-cli
+sudo npm install -g tree-sitter-cli
 
 # Ubuntu installs fd-find as 'fdfind', but many plugins expect 'fd'
 sudo ln -sf "$(command -v fdfind)" /usr/local/bin/fd
