@@ -8,7 +8,7 @@ HISTFILESIZE="${HISTSIZE}"
 source /usr/share/bash-completion/bash_completion
 
 # Set paths
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 # File system
 alias ls='eza -lh --group-directories-first --icons=auto'

@@ -11,6 +11,7 @@ echo "Creating symlinks for your environment..."
 
 # 1. Ensure the base .config directory exists
 mkdir -p ~/.config
+mkdir -p ~/bin
 
 # 2. Link home directory files
 ln -sfn "$DOTFILES_DIR/.bashrc" ~/.bashrc
@@ -21,5 +22,11 @@ ln -sfn "$DOTFILES_DIR/.gitignore_global" ~/.gitignore_global
 ln -sfn "$DOTFILES_DIR/nvim" ~/.config/nvim
 ln -sfn "$DOTFILES_DIR/alacritty" ~/.config/alacritty
 ln -sfn "$DOTFILES_DIR/zellij" ~/.config/zellij
+
+# 4. Link individual scripts from the repo's bin folder
+for script in "$DOTFILES_DIR/bin/"*; do
+  filename=$(basename "$script")
+  ln -sfn "$script" "$HOME/bin/$filename"
+done
 
 echo "Success! Your dotfiles are securely linked."
