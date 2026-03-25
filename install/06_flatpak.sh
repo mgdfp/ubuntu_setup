@@ -13,7 +13,7 @@ else
   echo "  ➜ Setting up Flatpak and Flathub..."
   sudo add-apt-repository universe -y
   sudo apt update -qq
-  sudo apt install -y -qq flatpak gnome-software-plugin-flatpak
+  sudo apt install -y -qq flatpak
 fi
 
 # 2. Add Flathub repository (safe to run even if it exists)
