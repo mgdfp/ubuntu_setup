@@ -8,7 +8,6 @@ source "$SCRIPT_DIR/../functions.sh"
 
 # ... rest of your script
 PACKAGES=(
-  "gnome-shell-extension-manager"
   "ubuntu-restricted-extras"
   "unzip"
   "p7zip"
@@ -23,10 +22,8 @@ PACKAGES=(
   "fzf"
   "ripgrep"
   "bat"
-  "gnome-tweaks"
   "wl-clipboard"
   "flameshot"
-  "gnome-sushi"
   "vlc"
   "npm"
 )

@@ -89,7 +89,6 @@ if [ ${#selected_scripts[@]} -gt 0 ]; then
 fi
 
 # Run the last scripts, have to be run at the end because they rely on everything else being installed.
-bash "$SCRIPT_DIR"/dock.sh
 bash "$SCRIPT_DIR"/dotfiles.sh
 
 echo "All installations complete!"

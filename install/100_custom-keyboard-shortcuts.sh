@@ -1,23 +1,15 @@
 #!/bin/bash
 set -e
 
-echo "Configuring custom keyboard shortcuts..."
+echo "Configuring custom keyboard shortcuts (Xfce)..."
 
-# 1. Unset the default 'home' key so it doesn't conflict
-gsettings set org.gnome.settings-daemon.plugins.media-keys home "[]"
+# Flameshot region screenshot: Super+Shift+S
+xfconf-query -c xfce4-keyboard-shortcuts -p "/commands/custom/<Super><Shift>s" -n -t string -s "flameshot gui"
 
-# 2. Reserve TWO custom shortcut slots (one for Flameshot, one for Explorer)
-gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/']"
+# Open file manager: Super+E
+xfconf-query -c xfce4-keyboard-shortcuts -p "/commands/custom/<Super>e" -n -t string -s "thunar"
 
-# 3. Custom Slot 0: Flameshot Region (with Wayland fix)
-gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'Flameshot Region'
-gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command 'sh -c -- "flameshot gui"'
-gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding '<Super><Shift>s'
+# Lock screen: Super+L
+xfconf-query -c xfce4-keyboard-shortcuts -p "/commands/custom/<Super>l" -n -t string -s "xflock4"
 
-# 4. Custom Slot 1: Force New File Explorer Window
-gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ name 'New File Explorer'
-gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ command 'nautilus --new-window'
-gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ binding '<Super>e'
-
-# set win + l to be lock computer.
-gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver "['<Super>l']"
+echo "Keyboard shortcuts configured!"
