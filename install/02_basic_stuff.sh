@@ -6,16 +6,11 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Load shared functions
 source "$SCRIPT_DIR/../functions.sh"
 
-# ... rest of your script
 PACKAGES=(
-  "gnome-shell-extension-manager"
-  "ubuntu-restricted-extras"
   "unzip"
   "p7zip"
   "unrar"
   "git"
-  "gitk"
-  "meld"
   "curl"
   "wget"
   "eza"
@@ -23,11 +18,7 @@ PACKAGES=(
   "fzf"
   "ripgrep"
   "bat"
-  "gnome-tweaks"
-  "wl-clipboard"
-  "flameshot"
-  "gnome-sushi"
-  "vlc"
+  "fontconfig"
   "npm"
 )
 
@@ -36,13 +27,11 @@ sudo apt update -qq
 
 echo "Checking and installing applications..."
 
-# 2. Loop through the list and check if the app is already installed, skip if it is.
 for pkg in "${PACKAGES[@]}"; do
   if is_apt_installed "$pkg"; then
     echo "  ✓ $pkg is already installed."
   else
     echo "  ➜ Installing $pkg..."
-    # Note: ubuntu-restricted-extras may prompt for a EULA agreement
     sudo apt install -y -qq "$pkg"
   fi
 done

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Directory where this script lives (used for the icon path)
+# Directory where this script lives
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 sudo apt update -qq
@@ -13,7 +13,7 @@ sudo apt install -y -qq \
   luarocks
 
 # tree sitter in apt is too old. remove if installed and get later version from npm.
-sudo apt remove -y tree-sitter-cli
+sudo apt remove -y tree-sitter-cli 2>/dev/null || true
 sudo npm install -g tree-sitter-cli
 
 # Ubuntu installs fd-find as 'fdfind', but many plugins expect 'fd'
@@ -22,7 +22,7 @@ sudo ln -sf "$(command -v fdfind)" /usr/local/bin/fd
 # Optional: wipe Neovim runtime dirs (keeps ~/.config/nvim intact)
 rm -rf ~/.local/share/nvim/ ~/.local/state/nvim/ ~/.cache/nvim/
 
-echo "Installing Neovim (Omakub/DHH method: stable tarball to /usr/local)..."
+echo "Installing Neovim (stable tarball to /usr/local)..."
 
 cd /tmp
 rm -rf nvim-linux-x86_64 nvim.tar.gz
@@ -35,32 +35,9 @@ sudo cp -R nvim-linux-x86_64/share /usr/local/
 rm -rf nvim-linux-x86_64 nvim.tar.gz
 cd - >/dev/null
 
-# Python provider venv (optional but nice to keep)
+# Python provider venv
 mkdir -p ~/.local/share/nvim/venv
 python3 -m venv ~/.local/share/nvim/venv
 ~/.local/share/nvim/venv/bin/pip install -U pip pynvim
 
-echo "Creating Neovim desktop entry..."
-mkdir -p ~/.local/share/icons/hicolor/128x128/apps/ ~/.local/share/applications
-
-cp "$SCRIPT_DIR/../icons/nvim.png" ~/.local/share/icons/hicolor/128x128/apps/nvim.png
-
-cat <<EOF >~/.local/share/applications/nvim.desktop
-[Desktop Entry]
-Type=Application
-Name=Neovim
-GenericName=Text Editor
-Comment=Edit text files
-Icon=nvim
-Exec=alacritty -e nvim %F
-Terminal=false
-Categories=Utilities;TextEditor;Development;
-Keywords=Text;Editor;
-StartupNotify=false
-EOF
-
-# Refresh caches (only if tools exist)
-command -v gtk-update-icon-cache >/dev/null 2>&1 && gtk-update-icon-cache ~/.local/share/icons/hicolor -f -t || true
-command -v update-desktop-database >/dev/null 2>&1 && update-desktop-database ~/.local/share/applications || true
-
-echo "Done."
+echo "Neovim installation complete."

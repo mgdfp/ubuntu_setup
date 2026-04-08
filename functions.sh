@@ -11,11 +11,6 @@ is_snap_installed() {
   snap list "$1" >/dev/null 2>&1
 }
 
-# Returns true (0) if the Flatpak ID is installed
-is_flatpak_installed() {
-  flatpak info "$1" >/dev/null 2>&1
-}
-
 # Returns true (0) if the command/binary exists in the system path
 is_command_installed() {
   command -v "$1" >/dev/null 2>&1

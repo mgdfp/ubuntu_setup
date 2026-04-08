@@ -62,7 +62,6 @@ fi
 
 # 3. Execution
 echo "Updating and cleaning base system..."
-sudo snap refresh
 sudo systemctl daemon-reload
 sudo apt update -qq
 sudo apt full-upgrade -y -qq
@@ -88,8 +87,7 @@ if [ ${#selected_scripts[@]} -gt 0 ]; then
   done
 fi
 
-# Run the last scripts, have to be run at the end because they rely on everything else being installed.
-bash "$SCRIPT_DIR"/dock.sh
+# Run dotfiles setup last (relies on tools being installed)
 bash "$SCRIPT_DIR"/dotfiles.sh
 
 echo "All installations complete!"
