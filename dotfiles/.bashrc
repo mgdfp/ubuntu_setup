@@ -40,9 +40,24 @@ alias decompress="tar -xzf"
 
 # Prompt
 force_color_prompt=yes
-color_prompt=yes
-PS1=$'\uf0a9 '
-PS1="\[\e]0;\w\a\]$PS1"
+
+if [ -n "$force_color_prompt" ]; then
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+        color_prompt=yes
+    else
+        color_prompt=
+    fi
+fi
+
+if [ "$color_prompt" = yes ]; then
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+else
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+fi
+unset force_color_prompt color_prompt
+
+# Keep your window title update
+PS1="\[\e]0;\u@\h: \w\a\]$PS1"
 
 # Terminal Tool Initialization
 if command -v zoxide &>/dev/null; then
