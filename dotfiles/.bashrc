@@ -45,10 +45,15 @@ clip() {
 }
 
 # Prompt
-force_color_prompt=yes
-color_prompt=yes
-PS1=$'\uf0a9 '
-PS1="\[\e]0;\w\a\]$PS1"
+# Standard prompt for SSH, custom for local
+if [ -n "$SSH_CONNECTION" ]; then
+  PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+else
+  force_color_prompt=yes
+  color_prompt=yes
+  PS1=$'\uf0a9 '
+  PS1="\[\e]0;\w\a\]$PS1"
+fi
 
 # Terminal Tool Initialization
 if command -v zoxide &>/dev/null; then
