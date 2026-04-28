@@ -39,25 +39,17 @@ compress() { tar -czf "${1%/}.tar.gz" "${1%/}"; }
 alias decompress="tar -xzf"
 
 # Prompt
-force_color_prompt=yes
-
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-        color_prompt=yes
-    else
-        color_prompt=
-    fi
-fi
-
-if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+# Standard prompt for SSH, custom for local
+if [ -n "$SSH_CONNECTION" ]; then
+  # Standard Ubuntu prompt
+  PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+  # Your custom local prompt
+  force_color_prompt=yes
+  color_prompt=yes
+  PS1=$'\uf0a9 '
+  PS1="\[\e]0;\w\a\]$PS1"
 fi
-unset force_color_prompt color_prompt
-
-# Keep your window title update
-PS1="\[\e]0;\u@\h: \w\a\]$PS1"
 
 # Terminal Tool Initialization
 if command -v zoxide &>/dev/null; then
@@ -76,3 +68,7 @@ fi
 # Editor used by CLI
 export EDITOR="nvim"
 export SUDO_EDITOR="$EDITOR"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
